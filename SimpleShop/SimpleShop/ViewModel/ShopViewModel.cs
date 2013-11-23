@@ -21,6 +21,13 @@ namespace SimpleShop.ViewModel
     /// </summary>
     internal class ShopViewModel : ViewModelBase
     {
+        #region Constants
+
+        // Maximum ID for items
+        private const int MAX_ID = 5000;
+
+        #endregion
+
         #region Fields
 
         // Collection of items in the shop inventory
@@ -175,7 +182,7 @@ namespace SimpleShop.ViewModel
             ExitCommand = new RelayCommand(exitCommand_Execute);
             AboutCommand = new RelayCommand(aboutCommand_Execute);
             AddItemCommand = new RelayCommand(addItemCommand_Execute);
-            DeleteItemCommand = new RelayCommand(deleteItemCommand_Execute);
+            DeleteItemCommand = new RelayCommand(deleteItemCommand_Execute, deleteItemCommand_CanExecute);
         }
 
         #endregion
@@ -281,9 +288,32 @@ namespace SimpleShop.ViewModel
             addItemViewModel.View = addItemWindow;
 
             addItemWindow.ShowDialog();
-            
+
             if (addItemViewModel.CreateItem)
+            {
+                // Generate unique ID
+                for (int i = 0; i < MAX_ID; i++)
+                {
+                    bool idInUse = false;
+
+                    foreach (Item item in itemCollection)
+                    {
+                        if (item.ID == i)
+                        {
+                            idInUse = true;
+                            break;
+                        }
+                    }
+
+                    if (!idInUse)
+                    {
+                        addItemViewModel.Item.ID = i;
+                        break;
+                    }
+                }
+
                 itemCollection.Add(addItemViewModel.Item);
+            }
         }
 
         /// <summary>
@@ -302,6 +332,16 @@ namespace SimpleShop.ViewModel
             }
         }
 
+        /// <summary>
+        /// Returns a boolean value determining if the delete item command can execute.
+        /// </summary>
+        /// <param name="parameter">Command parameter.</param>
+        /// <returns>True if the command can execute.</returns>
+        private bool deleteItemCommand_CanExecute(object parameter)
+        {
+            return (selectedItem != null);
+        }
+
         #endregion
 
         #region Private Methods
@@ -317,8 +357,8 @@ namespace SimpleShop.ViewModel
             {
                 // Get common properties for items
                 selectedItemProperties.Add(new ItemInformationProperty("ID", selectedItem.ID));
-                selectedItemProperties.Add(new ItemInformationProperty("Description", selectedItem.Description));
-                selectedItemProperties.Add(new ItemInformationProperty("Price", selectedItem.Price));
+                //selectedItemProperties.Add(new ItemInformationProperty("Description", selectedItem.Description));
+                selectedItemProperties.Add(new ItemInformationProperty("Price", selectedItem.Price, "{0:F2}"));
 
                 // Get properties unique to derived classes
                 if (selectedItem is Bike)

@@ -14,6 +14,8 @@ namespace SimpleShop.ViewModel
         private string description;
         // Property value
         private object value;
+        // Property value string format
+        private string valueStringFormat;
 
         #endregion
 
@@ -51,6 +53,22 @@ namespace SimpleShop.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets the value string format of the property.
+        /// </summary>
+        public string ValueStringFormat
+        {
+            get { return valueStringFormat; }
+            set
+            {
+                if (valueStringFormat != value)
+                {
+                    valueStringFormat = value;
+                    OnPropertyChanged("ValueStringFormat");
+                }
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -62,6 +80,17 @@ namespace SimpleShop.ViewModel
         {
             this.description = description;
             this.value = value;
+            this.valueStringFormat = "{0}";
+        }
+
+        /// <summary>
+        /// Creates a new instance of the ItemInformationProperty class.
+        /// </summary>
+        public ItemInformationProperty(string description, object value, string valueStringFormat)
+        {
+            this.description = description;
+            this.value = value;
+            this.valueStringFormat = valueStringFormat;
         }
 
         #endregion

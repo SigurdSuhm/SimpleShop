@@ -8,6 +8,15 @@ using System.ComponentModel;
 namespace SimpleShop.Model
 {
     /// <summary>
+    /// Enum for item types.
+    /// </summary>
+    public enum ItemType
+    {
+        Bike,
+        Shirt
+    }
+
+    /// <summary>
     /// Base class for items in the shop inventory.
     /// </summary>
     public abstract class Item : INotifyPropertyChanged
@@ -24,6 +33,11 @@ namespace SimpleShop.Model
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets the type of the item.
+        /// </summary>
+        public ItemType Type { get; protected set; }
 
         /// <summary>
         /// Gets or sets the ID of the item.

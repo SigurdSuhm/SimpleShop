@@ -58,6 +58,8 @@ namespace SimpleShop.Model
         public Shirt(int id, string description, double price, Color color)
             : base(id, description, price)
         {
+            Type = ItemType.Shirt;
+
             this.color = color;
         }
 

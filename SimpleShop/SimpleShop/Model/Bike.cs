@@ -48,6 +48,8 @@ namespace SimpleShop.Model
         public Bike(int id, string description, double price, string wheelType)
             : base(id, description, price)
         {
+            Type = ItemType.Bike;
+
             this.wheelType = wheelType;
         }
 

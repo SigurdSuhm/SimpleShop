@@ -55,6 +55,7 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\BoolToVisibilityConverter.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Helpers\StringFormatConverter.cs" />
     <Compile Include="ViewModel\AddItemViewModel.cs" />
     <Compile Include="ViewModel\ItemInformationProperty.cs" />
     <Compile Include="ViewModel\ShopViewModel.cs" />
